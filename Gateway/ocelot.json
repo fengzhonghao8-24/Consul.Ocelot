@@ -1,0 +1,55 @@
+//{
+//  "Routes": [
+//    {
+//      "DownstreamPathTemplate": "/{url}", //下游（转发的服务地址模板）
+//      "DownstreamScheme": "http",
+//      "DownstreamHostAndPorts": [
+//        {
+//          "Host": "localhost",
+//          "Port": 5050
+//        },
+//        {
+//          "Host": "localhost",
+//          "Port": 5051
+//        }
+//      ],
+//      "UpstreamPathTemplate": "/{url}", //上游（请求路径模板）
+//      "UpstreamHttpMethod": [ "Get", "Post" ],
+//      "LoadBalancerOptions": {
+//        "Type": "RoundRobin"
+//      }
+//    }
+//  ],
+//  "GlobalConfiguration": {
+//    "BaseUrl": "http://localhost:5181",
+//    "ServiceDiscoveryProvider": {
+//      "Host": "localhost",
+//      "Port": 8500,
+//      "Type": "Consul"
+//    }
+//  }
+//}
+
+{
+  "Routes": [
+    {
+      "DownstreamPathTemplate": "/{url}", //下游（转发的服务地址模板）
+      "DownstreamScheme": "http",
+      "UpstreamPathTemplate": "/ocelot/{url}", //上游（请求路径模板）
+      "UpstreamHttpMethod": [ "Get", "Post" ],
+      "ServiceName": "ServiceA",
+      "UseServiceDiscovery": true,
+      "LoadBalancerOptions": {
+        "Type": "RoundRobin" //轮询
+      }
+    }
+  ],
+  "GlobalConfiguration": {
+    "BaseUrl": "http://localhost:5181",
+    "ServiceDiscoveryProvider": { //consul 配置信息
+      "Host": "localhost",
+      "Port": 8500,
+      "Type": "Consul"
+    }
+  }
+}
